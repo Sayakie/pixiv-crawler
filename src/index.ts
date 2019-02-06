@@ -1,7 +1,3 @@
-import App from './App'
+import { Pixiv } from "./Pixiv";
 
-process.on('unhandledRejection', reason => console.warn(`WARNING: Unhandled promise rejection.  Reason: ${reason}`))
-
-App.getInstance()
-  .start()
-  .catch(console.error)
+Pixiv.crawl();

@@ -16,12 +16,12 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
-    "request": "^2.88.0",
-    "ts-node": "^8.0.2",
-    "typescript": "^3.3.1"
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.10",
-    "@types/request": "^2.48.1"
+    "@types/request": "^2.48.1",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.1"
   }
 }
