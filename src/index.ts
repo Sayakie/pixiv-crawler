@@ -1,3 +1,3 @@
-import { Pixiv } from "./Pixiv";
+import { Pixiv } from './Pixiv'
 
-Pixiv.crawl();
+Pixiv.crawl()
