@@ -85,7 +85,7 @@ const extractImageList = async (body: HTML) => {
   const $ = cheerio.load(body, { xmlMode: true })
   const PixivImageContainer = '.img-container > a > img'
   const pixivImageList = $(PixivImageContainer).get()
-  const ResolutionPattern = /c\/600x600\//
+  const ResolutionPattern = /c\/\d{3,4}x\d{3,4}\//
   return pixivImageList.map((options: LinkOptions) => {
     const imageUrl = options.attribs.src.replace(ResolutionPattern, '')
     const imageName = imageUrl.split('/')[11].split('_')[0]
