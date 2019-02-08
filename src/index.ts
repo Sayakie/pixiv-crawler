@@ -1,3 +1,1 @@
-import { Pixiv } from './Pixiv'
-
-Pixiv.crawl()
+export { Pixiv } from './Pixiv'
