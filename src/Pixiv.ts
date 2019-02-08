@@ -61,7 +61,9 @@ const getPayload = (url: string) => ({
 
 const startGetRequest = (payload: Payload) =>
   new Promise<HTML>((resolve, reject) => {
-    request.get(payload, (error, _, body: HTML) => (error ? reject(error) : resolve(body)))
+    request.get(payload, (error, { statusCode }, body: HTML) =>
+      error || statusCode !== 200 ? reject(error) : resolve(body)
+    )
   })
 
 const extractImageLinksList = (body: HTML): string[] => {
