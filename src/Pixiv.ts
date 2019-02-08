@@ -2,6 +2,11 @@ import fs from 'fs'
 import request from 'request'
 import * as cheerio from 'cheerio'
 
+interface itemList {
+  readonly url: string
+  readonly name: string
+}
+
 export const Pixiv = {
   async crawl() {
     const payload = getPayload(RequestUrl)
@@ -18,7 +23,7 @@ export const Pixiv = {
     const imageList = (await Promise.all(imageBodyList.map(extractImageList))).reduce(flatList)
 
     const Encoding = 'base64'
-    imageList.forEach(async ({ url, name }) => {
+    imageList.forEach(async ({ url, name }: itemList) => {
       const payload = getPayload(url)
       const image = await startGetRequest(payload)
       fs.writeFile(name, Buffer.from(image, 'binary').toString(Encoding), Encoding, console.error)
@@ -26,7 +31,7 @@ export const Pixiv = {
   }
 }
 
-const flatList = (itemList: any[], currentItemList: any[]) => itemList.concat(currentItemList)
+const flatList = (itemList: itemList[], currentItemList: itemList[]) => itemList.concat(currentItemList)
 
 type Payload = request.CoreOptions & (request.UrlOptions | request.UriOptions)
 
