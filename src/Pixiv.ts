@@ -117,7 +117,7 @@ export const Pixiv = {
       const payload = getPayload(url)
       const image = await startGetRequest(payload)
 
-      fs.writeFile(file, Buffer.from(<string>(<any>image), 'binary').toString(Encoding), Encoding, console.error)
+      fs.writeFile(file, Buffer.from(image, 'binary').toString(Encoding), Encoding, console.error)
     })
   }
 }
@@ -134,8 +134,6 @@ const getPayload = (url: string) => ({
     referer: OriginalUrl
   }
 })
-
-let is = false
 
 const extractImageList = async (requestUrl: string) => {
   const payload = getPayload(requestUrl)
@@ -161,8 +159,8 @@ const getArtworks = (payload: Payload) => startGetRequest(payload).then(({ rank_
 const flatList = (itemList: itemList[], currentItemList: itemList[]) => itemList.concat(currentItemList)
 
 const startGetRequest = (payload: Payload) =>
-  new Promise<string[]>((resolve, reject) => {
-    request.get(payload, (error, { statusCode }, body: string[]) => {
+  new Promise<string>((resolve, reject) => {
+    request.get(payload, (error, { statusCode }, body: string) => {
       error || statusCode !== 200 ? reject(error) : resolve(body)
     })
   })
