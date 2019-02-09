@@ -50,7 +50,7 @@ interface Contents {
 
 interface PixivAPI {
   readonly content: Content
-  readonly contents: Contents
+  readonly contents: Contents[]
   readonly mode: Mode
   readonly date: string
   readonly page: number
@@ -111,12 +111,14 @@ export const Pixiv = {
       const file = `${options.saveDir}/${name}`
 
       if (fs.existsSync(file)) {
+        console.log(`Skip to download: ${name}`)
         return
       }
 
       const payload = getPayload(url)
-      const image = await startGetRequest(payload)
+      const image: string = await startGetRequest(payload)
 
+      console.log(`Download: ${name}`)
       fs.writeFile(file, Buffer.from(image, 'binary').toString(Encoding), Encoding, console.error)
     })
   }
@@ -137,9 +139,9 @@ const getPayload = (url: string) => ({
 
 const extractImageList = async (requestUrl: string) => {
   const payload = getPayload(requestUrl)
-  const imageList = await startGetRequest(payload)
+  const imageList: PixivAPI = await startGetRequest(payload)
 
-  const extractImage = ({ url }: Url): itemList => {
+  const extractImage = ({ url }: Contents): itemList => {
     const imageUrl = url.replace(ResolutionPattern, '')
     const imageName = imageUrl.split('/')[11].split('_')[0]
     const imageExtension = imageUrl.slice(-3)
@@ -150,17 +152,16 @@ const extractImageList = async (requestUrl: string) => {
     }
   }
 
-  // @ts-ignore
   return imageList.contents.map(extractImage)
 }
 
-const getArtworks = (payload: Payload) => startGetRequest(payload).then(({ rank_total }: any): number => rank_total)
+const getArtworks = (payload: Payload) => startGetRequest(payload).then(({ rank_total }: PixivAPI) => rank_total)
 
 const flatList = (itemList: itemList[], currentItemList: itemList[]) => itemList.concat(currentItemList)
 
 const startGetRequest = (payload: Payload) =>
-  new Promise<string>((resolve, reject) => {
-    request.get(payload, (error, { statusCode }, body: string) => {
+  new Promise<any>((resolve, reject) => {
+    request.get(payload, (error, { statusCode }, body) => {
       error || statusCode !== 200 ? reject(error) : resolve(body)
     })
   })
