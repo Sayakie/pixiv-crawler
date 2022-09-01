@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "pixiv-crawler",
+  "name": "@sayakie/pixiv-crawler",
   "version": "2.0.0",
   "description": "Crawls images from Pixiv 🚀",
   "main": "dist/index.js",
