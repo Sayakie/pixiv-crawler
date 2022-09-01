@@ -2,15 +2,31 @@
   "private": true,
   "name": "pixiv-crawler",
   "version": "1.1.26",
-  "engines": {
-    "node": ">= 8"
+  "description": "Crawls images from Pixiv 🚀",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "dist/index.mjs",
+      "require": "dist/index.js",
+      "types": "dist/index.d.ts"
+    }
   },
-  "author": "Sayakie <shuvi.dev.b701@gmail.com> (https://sayakie.github.io)",
-  "repository": "Sayakie/pixiv-crawler",
-  "workspaces": [
-    "src/*"
-  ],
+  "author": "Sayakie <sayakie@kakao.com>",
+  "contributors": [],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sayakie/pixiv-crawler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Sayakie/pixiv-crawler/issues"
+  },
+  "engines": {
+    "node": ">=8",
+    "pnpm": ">=7 <8"
+  },
   "scripts": {
     "start": "ts-node src/crawlAndSave.ts",
     "build": "tsc"
